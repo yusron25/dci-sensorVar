@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Sensor Variable</title>
+  <link rel="stylesheet" href="assets\fontawesome-free-5.14.0-web\css\all.min.css" />
+  <link rel="stylesheet" href="assets\bootstrap\css\bootstrap.min.css" />
+  <link rel="stylesheet" href="assets\bootstrap\css\bootstrap.min.css.map" />
+  <link rel="stylesheet" href="assets\bootstrap\css\bootstrap-grid.min.css" />
+  <link rel="stylesheet" href="assets\bootstrap\css\bootstrap-reboot.min.css" />
+  <link rel="stylesheet" href="assets\datatables\datatables.min.css" />
+  <link rel="stylesheet" href="assets\datatables\DataTables-1.10.21\css\jquery.dataTables.min.css" />
+  <link rel="stylesheet" href="assets\datatables\DataTables-1.10.21\css\dataTables.bootstrap4.min.css" />
+  <link rel="stylesheet" href="assets\datatables\Responsive-2.2.5\css\responsive.bootstrap4.min.css" />
+  <link rel="stylesheet" href="assets\datatables\Responsive-2.2.5\css\responsive.dataTables.min.css" />
+  <link rel="stylesheet" href="assets\datatables\Responsive-2.2.5\css\responsive.bootstrap4.min.css" />
+</head>
+
+<body>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="row mb-3" style="background-color: #405c80">
+          <div class="col-sm-12 my-4 mx-2">
+            <h4 style="color: white; display: inline-block">
+              Manage <b>Sensor Variable</b>
+            </h4>
+            <span class="float-right mx-5">
+              <button onclick="deletes()" type="button" class="btn btn-sm btn-danger pull-right">
+                <i class="fa fa-minus-circle"></i> Delete
+              </button>
+              <button type="button" class="btn btn-sm btn-success pull-right" data-target="#addVar" data-toggle="modal">
+                <i class="fa fa-plus-circle"></i> Add New Variable
+              </button>
+            </span>
+          </div>
+        </div>
+        <table class="table table-hover table-stripped" id="dtSensorVar">
+          <thead>
+            <tr>
+              <th></th>
+              <th><input type="checkbox" id="allCheck" /></th>
+              <th>Variable ID</th>
+              <th>Variable Name</th>
+              <th>Location</th>
+              <th>Category</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+
+<div class="modal fade" id="updateVar" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Variable</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="updateForm">
+          <input type="hidden" name="id">
+          <div class="form-group row">
+            <div class="col-sm-4">
+              <label for="">Variable ID</label>
+            </div>
+            <div class="col-sm-8">
+              <input type="text" name="varId" class="col-sm-8 form-control form-control-sm" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4">
+              <label for="">Variable Name</label>
+            </div>
+            <div class="col-sm-8">
+              <input type="text" name="varName" class="col-sm-8 form-control form-control-sm" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4">
+              <label for="">Location</label>
+            </div>
+            <div class="col-sm-8">
+              <input type="text" name="location" class="col-sm-8 form-control form-control-sm" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4">
+              <label for="">Category</label>
+            </div>
+            <div class="col-sm-8">
+              <input type="text" name="category" class="col-sm-8 form-control form-control-sm" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button onclick="save()" type="button" class="btn btn-primary">
+          <i class="fa fa-edit"></i>Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addVar" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Variable</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="addForm">
+          <div class="form-group row">
+            <div class="col-sm-4">
+              <label for="">Variable ID</label>
+            </div>
+            <div class="col-sm-8">
+              <input type="text" name="varId" class="col-sm-8 form-control form-control-sm" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4">
+              <label for="">Variable Name</label>
+            </div>
+            <div class="col-sm-8">
+              <input type="text" name="varName" class="col-sm-8 form-control form-control-sm" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4">
+              <label for="">Location</label>
+            </div>
+            <div class="col-sm-8">
+              <input type="text" name="location" class="col-sm-8 form-control form-control-sm" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-4">
+              <label for="">Category</label>
+            </div>
+            <div class="col-sm-8">
+              <input type="text" name="category" class="col-sm-8 form-control form-control-sm" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button onclick="addvar()" type="button" class="btn btn-primary">
+          <i class="fa fa-plus-circle"></i> Add Variable
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets\jquery.js"></script>
+<script src="assets\fontawesome-free-5.14.0-web\js\all.min.js"></script>
+<script src="assets\bootstrap\js\bootstrap.min.js"></script>
+<script src="assets\bootstrap\js\bootstrap.bundle.min.js"></script>
+<script src="assets\datatables\datatables.min.js"></script>
+<script src="assets\datatables\DataTables-1.10.21\js\jquery.dataTables.min.js"></script>
+<script src="assets\datatables\DataTables-1.10.21\js\dataTables.bootstrap4.min.js"></script>
+<script src="assets\datatables\Responsive-2.2.5\js\responsive.bootstrap4.min.js"></script>
+<script>
+  var dtSensorVar;
+  $(document).ready(function () {
+    dtSensorVar = $("#dtSensorVar").DataTable({
+      responsive: true,
+      ordering: true,
+      dom: `<'row'<'col-sm-12'ftr>>
+    <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+      searchDelay: 500,
+      processing: true,
+      serverSide: false,
+      ajax: {
+        url: "http://localhost:9987/",
+        type: "GET",
+      },
+
+      columns: [
+        { data: null },
+        { data: null },
+        { data: "varId" },
+        { data: "varName" },
+        { data: "location" },
+        { data: "category" },
+        { data: null },
+      ],
+      initComplete: function () {
+        var thisTable = this;
+        var rowFilter = $('<tr class="filter"></tr>').appendTo(
+          $(this.api().table().header())
+        );
+
+        var hideSearchColumnResponsive = function () {
+          thisTable
+            .api()
+            .columns()
+            .every(function () {
+              var column = this;
+              if (column.responsiveHidden()) {
+                $(".filter").find("th").eq(column.index()).show();
+              } else {
+                $(".filter").find("th").eq(column.index()).hide();
+              }
+            });
+        };
+
+        // init on datatable load
+        hideSearchColumnResponsive();
+        // recheck on window resize
+        window.onresize = hideSearchColumnResponsive;
+      },
+
+      columnDefs: [
+        {
+          targets: 0,
+          orderable: false,
+          render: function (data, type, row) {
+            return "";
+          },
+        },
+        {
+          targets: 1,
+          orderable: false,
+          className: "text-center",
+          render: function (data, type, row) {
+            return (
+              `<input type="checkbox" name="id[]" class="checkId" value="` +
+              row.id +
+              `"/>`
+            );
+          },
+        },
+        {
+          targets: 6,
+          render: function (data, type, row) {
+            return (
+              `<button type="button" onclick="callMdlEdit('` +
+              row.id +
+              `','` +
+              row.varId +
+              `','` +
+              row.varName +
+              `','` +
+              row.location +
+              `','` +
+              row.category +
+              `')" class="btn btn-sm btn-default"><i class="fas fa-pencil-alt" style="color:#f7d13d"></i></button>
+            <button onclick="delvar('` +
+              row.id +
+              `')" type="button" class="btn btn-sm btn-default"><i class="fas fa-trash" style="color:red"></i></button>`
+            );
+          },
+        },
+      ],
+    });
+    $("#allCheck")
+      .change(function () {
+        dtSensorVar
+          .$(".checkId")
+          .prop("checked", $("#allCheck").is(":checked"));
+      })
+      .change();
+  });
+
+  function delvar(id) {
+    $.ajax({
+      url: "http://localhost:9987/delete/" + id,
+      type: "GET",
+    }).always(function () {
+      dtSensorVar.ajax.reload();
+    });
+  }
+
+  function addvar() {
+    var data = $("#addForm").serialize();
+    $.ajax({
+      url: "http://localhost:9987",
+      type: "post",
+      data: data,
+    }).always(function () {
+      $("#addVar").modal("hide");
+      dtSensorVar.ajax.reload();
+      $("#addForm").trigger("reset");
+    });
+  }
+
+  function callMdlEdit(id, varid, varname, loc, cat) {
+    $("#updateForm").find("input[name = id]").val(id);
+    $("#updateForm").find("input[name = varId]").val(varid);
+    $("#updateForm").find("input[name = varName]").val(varname);
+    $("#updateForm").find("input[name = location]").val(loc);
+    $("#updateForm").find("input[name = category]").val(cat);
+    $("#updateVar").modal("show");
+  }
+
+  function save() {
+    var data = $("#updateForm").serialize();
+    $.ajax({
+      url: "http://localhost:9987/detail/" + $("#updateForm").find("input[name = id]").val(),
+      type: "post",
+      data: data,
+    }).always(function () {
+      $("#updateVar").modal("hide");
+      dtSensorVar.ajax.reload();
+      $("#updateForm").trigger("reset");
+    });
+  }
+
+  function deletes() {
+    var data = dtSensorVar.$("input:checked").serialize();
+    $.ajax({
+      url: "http://localhost:9987/deletes",
+      type: "POST",
+      data: data,
+    }).always(function () {
+      dtSensorVar.ajax.reload();
+    });
+  }
+</script>
